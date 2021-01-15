@@ -7,11 +7,22 @@
         <div class="mb-3">
           <label for="email" class="form-label">Correo electronico</label>
           <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="Ingresar correo">
+          <div *ngIf="formgroup.controls['email'].invalid && formgroup.controls['email'].dirty" class="alert alert-danger" role="alert">
+            <span *ngIf="formgroup.controls['email'].errors.required">Correo requerido</span>
+            <span *ngIf="formgroup.controls['email'].errors.email">Correo no valido</span>
+          </div>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Contraseña</label>
-          <input type="password" class="form-control" id="password" formControlName="password" placeholder="Ingresar Contraseña">
+          <input type="password" (keyUp.enter)="ingresar()" class="form-control" id="password" formControlName="password" placeholder="Ingresar Contraseña">
+          <div *ngIf="formgroup.controls['password'].invalid && formgroup.controls['password'].dirty" class="alert alert-danger" role="alert">
+            <span *ngIf="formgroup.controls['password'].errors.required"> Contraseña requerida </span>
+          </div>
         </div>
         <button type="submit" (click)="ingresar()" [disabled]="formgroup.invalid" class="btn btn-primary">Ingresar</button>
       </form>
+      <br>
+      <div *ngIf="!datosCorrectos" class="alert alert-warning" role="alert">
+        {{textoError}}
+      </div>
 </div>
