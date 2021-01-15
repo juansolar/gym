@@ -9,11 +9,15 @@ import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { EncabezadoComponent } from './components/encabezado/encabezado.component';
+import { BsDropdownDirective, BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    EncabezadoComponent
   ],
   imports: [
     BrowserModule,
@@ -21,9 +25,13 @@ import { ReactiveFormsModule } from '@angular/forms';
     AccordionModule.forRoot(),
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxSpinnerModule,
+    BsDropdownModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    BsDropdownDirective
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

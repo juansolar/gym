@@ -15,8 +15,10 @@ export class AppComponent {
   constructor(public afAuth: AngularFireAuth) {
     this.afAuth.user.subscribe((
       data) =>{
-        this.cargando = false;
+        setTimeout(() => {
+          this.cargando = false;
         this.usuario = data;
+        }, 1000);
     })
   }
 
