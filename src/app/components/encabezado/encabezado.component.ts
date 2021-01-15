@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import firebase from 'firebase/app';
 
 @Component({
   selector: 'app-encabezado',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EncabezadoComponent implements OnInit {
 
-  constructor() { }
+  usuario: firebase.User;
+
+  constructor(private afAuth: AngularFireAuth) { }
 
   ngOnInit(): void {
+    this.afAuth.user.subscribe( (data) =>{
+      this.usuario = data;
+    }
+  )
+  }
+
+  logout() {
+    this.afAuth.signOut();
   }
 
 }
