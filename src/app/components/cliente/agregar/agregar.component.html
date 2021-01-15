@@ -1,0 +1,76 @@
+<div class="container mt-2">
+    <h2>Agregar Cliente</h2>
+    <form [formGroup]="formgroup" class="mt-3">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="Nombre">Nombre</label>
+                    <input type="text" class="form-control" placeholder="Agregar nombre" formControlName="nombre">
+                    <div *ngIf="formgroup.controls['nombre'].invalid && formgroup.controls['nombre'].dirty" class="alert alert-danger" role="alert">
+                        <span *ngIf="formgroup.controls['nombre'].errors.required"> Nombre requerida </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="Apellido">Apellido</label>
+                    <input type="text" class="form-control" placeholder="Agregar apellido" formControlName="apellido">
+                    <div *ngIf="formgroup.controls['apellido'].invalid && formgroup.controls['apellido'].dirty" class="alert alert-danger" role="alert">
+                        <span *ngIf="formgroup.controls['apellido'].errors.required"> Apellido requerido </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="Correo">Correo</label>
+                    <input type="text" class="form-control" placeholder="Agregar correo" formControlName="correo">
+                    <div *ngIf="formgroup.controls['correo'].invalid && formgroup.controls['correo'].dirty" class="alert alert-danger" role="alert">
+                        <span *ngIf="formgroup.controls['correo'].errors.required">Correo requerido</span>
+                        <span *ngIf="formgroup.controls['correo'].errors.email">Correo no valido</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="cedula">Cedula</label>
+                    <input type="number" class="form-control" placeholder="Agregar cedula" formControlName="cedula">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="fechaNacimiento">Fecha de nacimiento</label>
+                    <input type="date" class="form-control" formControlName="fechaNacimiento">
+                    <div *ngIf="formgroup.controls['fechaNacimiento'].invalid && formgroup.controls['fechaNacimiento'].dirty" class="alert alert-danger" role="alert">
+                        <span *ngIf="formgroup.controls['fechaNacimiento'].errors.required"> Fecha nacimiento requerida </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="telefono">Telefono</label>
+                    <input type="tel" class="form-control" placeholder="Agregar telefono" formControlName="telefono">
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="telefono">Imagen</label>
+                    <input type="file" class="form-control-file" placeholder="Agregar su imagen" formControlName="urlImg">
+                <div *ngIf="formgroup.controls['urlImg'].invalid && formgroup.controls['urlImg'].dirty" class="alert alert-danger" role="alert">
+                        <span *ngIf="formgroup.controls['urlImg'].errors.required"> Imagen requerida </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="mb-2">
+                    <progressbar [value]="22" type="warning" [striped]="true">22%</progressbar>
+                  </div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" [disabled]="formgroup.invalid" (click)="agregar()">Agregar cliente</button>
+
+    </form>
+</div>

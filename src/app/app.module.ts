@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { AngularFireModule } from '@angular/fire';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,15 +13,17 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { EncabezadoComponent } from './components/encabezado/encabezado.component';
 import { BsDropdownDirective, BsDropdownModule } from 'ngx-bootstrap/dropdown';
-import { ListadoClientesComponent } from './components/listado-clientes/listado-clientes.component';
+import { ListadoClientesComponent } from './components/cliente/listado-clientes/listado-clientes.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AgregarComponent } from './components/cliente/agregar/agregar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     EncabezadoComponent,
-    ListadoClientesComponent
+    ListadoClientesComponent,
+    AgregarComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,8 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     NgxSpinnerModule,
     BsDropdownModule.forRoot(),
     FormsModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    ProgressbarModule.forRoot()
   ],
   providers: [
     BsDropdownDirective
