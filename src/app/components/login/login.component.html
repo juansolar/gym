@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="text-center">
+        <img src="assets/logo.jpg" alt="">
+        <h2>Bienvenido, porfavor ingrese sus datos</h2>
+    </div>
+    <form [formGroup]="formgroup"> 
+        <div class="mb-3">
+          <label for="email" class="form-label">Correo electronico</label>
+          <input type="email" class="form-control" id="email" formControlName="email" aria-describedby="emailHelp" placeholder="Ingresar correo">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" id="password" formControlName="password" placeholder="Ingresar Contraseña">
+        </div>
+        <button type="submit" (click)="ingresar()" [disabled]="formgroup.invalid" class="btn btn-primary">Ingresar</button>
+      </form>
+</div>
