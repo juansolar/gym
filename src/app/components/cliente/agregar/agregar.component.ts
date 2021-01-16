@@ -1,5 +1,6 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -12,8 +13,9 @@ export class AgregarComponent implements OnInit {
 
   formgroup: FormGroup;
   porcentajeSubida: number = 0;
+  urlImg: string = "";
 
-  constructor(private fb: FormBuilder, private storage: AngularFireStorage) { }
+  constructor(private fb: FormBuilder, private storage: AngularFireStorage, private db: AngularFirestore) { }
 
   ngOnInit(): void {
     this.formgroup = this.fb.group({
@@ -31,23 +33,30 @@ export class AgregarComponent implements OnInit {
   }
 
   agregar(){
-    console.log(this.formgroup.value)
+    this.formgroup.value.urlImg = this.urlImg;
+    this.formgroup.value.fechaNacimiento = new Date(this.formgroup.value.fechaNacimiento);
+    this.db.collection("Cliente").add(this.formgroup.value).then(
+      (data) => console.log("Termino.")
+    )
   }
 
   subirArchivo(event){
-    let archivo = event.target.files[0];
-    let ruta = 'clientes/' + event.target.files[0].name
-    const referencia = this.storage.ref(ruta);
-    const tarea = referencia.put(archivo);
-    tarea.then((data)=>{
-      console.log(data);
-      referencia.getDownloadURL().subscribe((data)=>{
+    if(event.target.files.length > 0){
+      let archivo = event.target.files[0];
+      let ruta = 'clientes/' + event.target.files[0].name
+      const referencia = this.storage.ref(ruta);
+      const tarea = referencia.put(archivo);
+      tarea.then((data)=>{
         console.log(data);
+        referencia.getDownloadURL().subscribe((data)=>{
+          this.urlImg = data;
+        });
       });
-    });
-    tarea.percentageChanges().subscribe((porcentaje)=>{
-      this.porcentajeSubida = parseInt(porcentaje.toString());
-    });
+      tarea.percentageChanges().subscribe((porcentaje)=>{
+        this.porcentajeSubida = parseInt(porcentaje.toString());
+      });
+    }
+    
   }
 
 }
