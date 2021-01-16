@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { AngularFireModule } from '@angular/fire';
 import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,7 +37,8 @@ import { AgregarComponent } from './components/cliente/agregar/agregar.component
     BsDropdownModule.forRoot(),
     FormsModule,
     AngularFirestoreModule,
-    ProgressbarModule.forRoot()
+    ProgressbarModule.forRoot(),
+    AngularFireStorageModule
   ],
   providers: [
     BsDropdownDirective

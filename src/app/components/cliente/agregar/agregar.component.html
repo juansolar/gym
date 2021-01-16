@@ -57,7 +57,7 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <label for="telefono">Imagen</label>
-                    <input type="file" class="form-control-file" placeholder="Agregar su imagen" formControlName="urlImg">
+                    <input type="file" (change)="subirArchivo($event)" class="form-control-file" placeholder="Agregar su imagen" formControlName="urlImg">
                 <div *ngIf="formgroup.controls['urlImg'].invalid && formgroup.controls['urlImg'].dirty" class="alert alert-danger" role="alert">
                         <span *ngIf="formgroup.controls['urlImg'].errors.required"> Imagen requerida </span>
                     </div>
@@ -65,7 +65,7 @@
             </div>
             <div class="col-sm-12">
                 <div class="mb-2">
-                    <progressbar [value]="22" type="warning" [striped]="true">22%</progressbar>
+                    <progressbar [value]="porcentajeSubida" type="warning" [striped]="true">{{porcentajeSubida}}%</progressbar>
                   </div>
             </div>
         </div>

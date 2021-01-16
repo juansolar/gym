@@ -1,4 +1,6 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -9,8 +11,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AgregarComponent implements OnInit {
 
   formgroup: FormGroup;
+  porcentajeSubida: number = 0;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private storage: AngularFireStorage) { }
 
   ngOnInit(): void {
     this.formgroup = this.fb.group({
@@ -29,6 +32,22 @@ export class AgregarComponent implements OnInit {
 
   agregar(){
     console.log(this.formgroup.value)
+  }
+
+  subirArchivo(event){
+    let archivo = event.target.files[0];
+    let ruta = 'clientes/' + event.target.files[0].name
+    const referencia = this.storage.ref(ruta);
+    const tarea = referencia.put(archivo);
+    tarea.then((data)=>{
+      console.log(data);
+      referencia.getDownloadURL().subscribe((data)=>{
+        console.log(data);
+      });
+    });
+    tarea.percentageChanges().subscribe((porcentaje)=>{
+      this.porcentajeSubida = parseInt(porcentaje.toString());
+    });
   }
 
 }
