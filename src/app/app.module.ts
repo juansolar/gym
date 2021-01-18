@@ -17,6 +17,7 @@ import { BsDropdownDirective, BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ListadoClientesComponent } from './components/cliente/listado-clientes/listado-clientes.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AgregarComponent } from './components/cliente/agregar/agregar.component';
+import { MensajesService } from './services/mensajes.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AgregarComponent } from './components/cliente/agregar/agregar.component
     AngularFireStorageModule
   ],
   providers: [
-    BsDropdownDirective
+    BsDropdownDirective,
+    MensajesService
   ],
   bootstrap: [AppComponent]
 })

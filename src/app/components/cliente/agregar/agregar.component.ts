@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Route, RouterLink } from '@angular/router';
+import { MensajesService } from 'src/app/services/mensajes.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-agregar',
@@ -18,7 +20,7 @@ export class AgregarComponent implements OnInit {
   id: string = ""
 
   constructor(private fb: FormBuilder, private storage: AngularFireStorage, private db: AngularFirestore,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute, private mensajeService: MensajesService) { }
 
   ngOnInit(): void {
 
@@ -63,7 +65,9 @@ export class AgregarComponent implements OnInit {
     this.formgroup.value.urlImg = this.urlImg;
     this.formgroup.value.fechaNacimiento = new Date(this.formgroup.value.fechaNacimiento);
     this.db.collection("Cliente").add(this.formgroup.value).then(
-      (data) => console.log("Se agrego correctamente")
+      (data) => {
+        this.mensajeService.mensajeCorrecto("Agrego", "Se agrego correctmane")
+      }
     ).catch(
       (error) => {console.log(error)}
     )
@@ -73,9 +77,13 @@ export class AgregarComponent implements OnInit {
     this.formgroup.value.urlImg = this.urlImg;
     this.formgroup.value.fechaNacimiento = new Date(this.formgroup.value.fechaNacimiento);
     this.db.doc('Cliente/' + this.id).update(this.formgroup.value).then(
-      (data) => console.log("Se edito correctamente")
+      (data) => {
+        this.mensajeService.mensajeCorrecto("Actualizo", "Se actualizo correctamente")
+      }
     ).catch(
-      (error) => {console.log(error)}
+      (error) => {
+        this.mensajeService.mensajeCorrecto("Error", "Ocurrio un error en la actualización")
+      }
     )
     
   }
