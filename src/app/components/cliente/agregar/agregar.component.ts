@@ -82,7 +82,7 @@ export class AgregarComponent implements OnInit {
       }
     ).catch(
       (error) => {
-        this.mensajeService.mensajeCorrecto("Error", "Ocurrio un error en la actualización")
+        this.mensajeService.mensajeCorrecto("Error", "Ocurrio un error en la actualización")  
       }
     )
     

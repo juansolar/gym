@@ -58,7 +58,7 @@
                 <div class="form-group">
                     <label for="telefono">Imagen</label>
                     <input type="file" (change)="subirArchivo($event)" class="form-control-file" placeholder="Agregar su imagen" formControlName="urlImg">
-                <div *ngIf="formgroup.controls['urlImg'].invalid && formgroup.controls['urlImg'].dirty" class="alert alert-danger" role="alert">
+                <div *ngIf="formgroup.controls['urlImg'].invalid && formgroup.controls['urlImg'].dirty && !esEditable" class="alert alert-danger" role="alert">
                         <span *ngIf="formgroup.controls['urlImg'].errors.required"> Imagen requerida </span>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
         </div>
 
         <button class="btn btn-primary" *ngIf="!esEditable" [disabled]="formgroup.invalid || porcentajeSubida != 100" (click)="agregar()">Agregar cliente</button>
-        <button class="btn btn-primary" *ngIf="esEditable" [disabled]="formgroup.invalid || porcentajeSubida != 100" (click)="editar()">Editar cliente</button>
+        <button class="btn btn-primary" *ngIf="esEditable" [disabled]="formgroup.invalid" (click)="editar()">Editar cliente</button>
 
     </form>
 </div>

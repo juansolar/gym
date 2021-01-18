@@ -18,6 +18,7 @@ import { ListadoClientesComponent } from './components/cliente/listado-clientes/
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AgregarComponent } from './components/cliente/agregar/agregar.component';
 import { MensajesService } from './services/mensajes.service';
+import { PrecioComponent } from './components/precio/precio.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MensajesService } from './services/mensajes.service';
     LoginComponent,
     EncabezadoComponent,
     ListadoClientesComponent,
-    AgregarComponent
+    AgregarComponent,
+    PrecioComponent
   ],
   imports: [
     BrowserModule,
