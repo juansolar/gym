@@ -70,7 +70,8 @@
             </div>
         </div>
 
-        <button class="btn btn-primary" [disabled]="formgroup.invalid || porcentajeSubida != 100" (click)="agregar()">Agregar cliente</button>
+        <button class="btn btn-primary" *ngIf="!esEditable" [disabled]="formgroup.invalid || porcentajeSubida != 100" (click)="agregar()">Agregar cliente</button>
+        <button class="btn btn-primary" *ngIf="esEditable" [disabled]="formgroup.invalid || porcentajeSubida != 100" (click)="editar()">Editar cliente</button>
 
     </form>
 </div>

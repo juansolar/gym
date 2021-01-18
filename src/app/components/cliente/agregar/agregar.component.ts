@@ -1,8 +1,8 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-agregar',
@@ -14,10 +14,14 @@ export class AgregarComponent implements OnInit {
   formgroup: FormGroup;
   porcentajeSubida: number = 0;
   urlImg: string = "";
+  esEditable: boolean = false;
+  id: string = ""
 
-  constructor(private fb: FormBuilder, private storage: AngularFireStorage, private db: AngularFirestore) { }
+  constructor(private fb: FormBuilder, private storage: AngularFireStorage, private db: AngularFirestore,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+
     this.formgroup = this.fb.group({
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
@@ -29,15 +33,51 @@ export class AgregarComponent implements OnInit {
       fechaNacimiento: ['',Validators.required],
       telefono: [''],
       urlImg: ['', Validators.required]
-    })
+    });
+
+    this.id = this.route.snapshot.params.clienteId;
+
+    if(this.id != undefined){
+      this.esEditable = true;
+      this.db.doc<any>('Cliente/' + this.id).valueChanges().subscribe(
+        (cliente) => {
+          console.log()
+          this.formgroup.setValue({
+            nombre: cliente.nombre,
+            apellido: cliente.apellido,
+            correo: cliente.correo,
+            cedula: cliente.cedula,
+            fechaNacimiento: new Date(cliente.fechaNacimiento.seconds * 1000).toISOString().substring(0,10),
+            telefono: cliente.telefono,
+            urlImg: ''
+          });
+          this.urlImg = cliente.urlImg;
+        }
+      )
+    }
+
+
   }
 
   agregar(){
     this.formgroup.value.urlImg = this.urlImg;
     this.formgroup.value.fechaNacimiento = new Date(this.formgroup.value.fechaNacimiento);
     this.db.collection("Cliente").add(this.formgroup.value).then(
-      (data) => console.log("Termino.")
+      (data) => console.log("Se agrego correctamente")
+    ).catch(
+      (error) => {console.log(error)}
     )
+  }
+
+  editar(){
+    this.formgroup.value.urlImg = this.urlImg;
+    this.formgroup.value.fechaNacimiento = new Date(this.formgroup.value.fechaNacimiento);
+    this.db.doc('Cliente/' + this.id).update(this.formgroup.value).then(
+      (data) => console.log("Se edito correctamente")
+    ).catch(
+      (error) => {console.log(error)}
+    )
+    
   }
 
   subirArchivo(event){

@@ -20,15 +20,12 @@ export class ListadoClientesComponent implements OnInit {
     this.clientes.length = 0;
     this.db.collection('Cliente').get().subscribe(
       (data) => {
-        console.log(data.docs)
 
         data.docs.forEach((item) =>{
-          console.log(item.id)
-          console.log(item.data())
 
           let cliente = item.data();
-          // cliente.id = item.id;
-          // cliente.ref = item.ref;
+          cliente.id = item.id;
+          cliente.ref = item.ref;
           this.clientes.push(cliente);
 
         });
