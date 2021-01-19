@@ -87,6 +87,9 @@ export class InscripcionComponent implements OnInit {
       this.inscripcion.fechaFinal = fechaFinal;
     }
 
+    this.inscripcion.subTotal = this.precioSeleccionado.costo;
+    this.inscripcion.iva = this.inscripcion.subTotal * 0.19;
+    this.inscripcion.total = this.inscripcion.iva + this.inscripcion.subTotal;
 
   }
 
