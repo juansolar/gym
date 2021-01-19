@@ -35,7 +35,7 @@ export class PrecioComponent implements OnInit {
     this.db.collection<Precio>("Precios").get().subscribe((data)=>{
       this.precios.length = 0;
       data.docs.forEach((data) =>{
-        let precio = data.data() as Precio;
+        let precio = data.data();
         precio.id = data.id;
         precio.ref = data.ref;
         this.precios.push(precio);
