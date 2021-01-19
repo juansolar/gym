@@ -2,6 +2,16 @@
     <div class="row mt-5">
         <div class="col-sm-6">
             <app-selecionar-cliente [nombre]="cliente.nombre" (canceloCliente)="eliminarCliente()" (seleccionado)="asingarCliente($event)"></app-selecionar-cliente>
+
+            <div>
+                <select class="form-control">
+                    <label for="">Inscripcion</label>
+                    <option *ngFor="let precio of precios" value="">
+                        {{precio.nombre}}
+                    </option>
+                </select>
+            </div>
+            <br>
             <button class="btn btn-primary" (click)="guardar()">Guardar</button>
         </div>
         <div class="col-sm-6">
