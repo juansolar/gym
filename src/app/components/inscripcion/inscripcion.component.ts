@@ -1,9 +1,11 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { ɵangular_packages_router_router_n } from '@angular/router';
 import { Cliente } from 'src/app/models/cliente';
 import { Inscripcion } from 'src/app/models/inscripcion';
 import { Precio } from 'src/app/models/precio';
+import { MensajesService } from 'src/app/services/mensajes.service';
 
 @Component({
   selector: 'app-inscripcion',
@@ -16,8 +18,9 @@ export class InscripcionComponent implements OnInit {
   cliente: Cliente = new Cliente();
   precios: Precio[] = new Array<Precio>();
   precioSeleccionado: Precio = new Precio();
+  idPrecio: string = "null"
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore, private mensajeService: MensajesService) { }
 
   ngOnInit(): void {
     this.db.collection<Precio>('Precios').get().subscribe(
@@ -45,9 +48,28 @@ export class InscripcionComponent implements OnInit {
 
   guardar(){
     if(this.inscripcion.validar().esValido){
-      console.log("Guardando")
+      let inscripcioneAgregar = {
+        fecha: this.inscripcion.fecha,
+        fechaFinal: this.inscripcion.fechaFinal,
+        cliente: this.inscripcion.cliente,
+        precio: this.inscripcion.precio,
+        subTotal: this.inscripcion.subTotal,
+        iva: this.inscripcion.iva,
+        total: this.inscripcion.total
+      }
+      this.db.collection("Inscripciones").add(inscripcioneAgregar).then(
+        (data) =>{
+          this.inscripcion = new Inscripcion();
+          this.cliente = new Cliente();
+          this.precioSeleccionado = new Precio();
+          this.idPrecio = "null"
+          this.mensajeService.mensajeCorrecto("Inscrito","Inscripción agregada con exito")
+        }
+      ).then(()=>{
+        this.mensajeService.mensajeError("Error","La inscripción no pudo ser registrada")
+      })
     }else
-      console.log(this.inscripcion.validar().mensaje)
+      this.mensajeService.mensajeAdvertencia("Advertencia", this.inscripcion.validar().mensaje)
   }
 
   seleccionarPrecio(id: string){
