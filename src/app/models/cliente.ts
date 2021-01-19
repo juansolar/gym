@@ -9,5 +9,7 @@ export class Cliente{
     fechaNacimiento: Date;
     telefono: number;
     urlImg: string;
-    ref: DocumentReference
+    ref: DocumentReference;
+    visible: boolean;
+
 }
